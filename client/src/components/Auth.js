@@ -5,6 +5,9 @@ import { useDispatch } from "react-redux";
 import { authActions } from "../store";
 import { useNavigate } from "react-router-dom";
 import {heroku} from "../credentials.js";
+import {GoogleAPI, GoogleLogin} from "react-google-oauth";
+
+
 
 
 const Auth = () => {
@@ -22,6 +25,40 @@ const Auth = () => {
       [e.target.name]: e.target.value,
     }));
   };
+
+  // const successResponseGoogle = () => {
+  //   console.log("Hi");
+  // }
+
+  // const failureResponseGoogle = () => {
+  //   console.log("Failed");
+  // }
+
+  const oAuthButton = (
+    //   <GoogleAPI
+    //   // className="google-login"
+    //   clientId="489518891349-o5o24ttupduu4uecp6peics35qbcvkkr.apps.googleusercontent.com"
+    //   //onUpdateSigninStatus = {(response) => console.log(response)}
+      
+    // >
+      <div>
+        <GoogleLogin 
+          googleGetAuthResponse = {(response) => console.log(response)} 
+          onLoginSuccess = {async (response) => {
+              let tokenId = response.Bc.id_token;
+              let data = await axios.post(`http://127.0.0.1:5000/api/user/login-google`, {
+                tokenId: tokenId
+              }).catch((err) => console.log(err))
+              localStorage.setItem("userId", data.user._id);
+            }
+          }
+
+          onLoginFailure = {(err) => console.log(err)}
+          />
+      </div>
+    // </GoogleAPI>
+  )
+
   const sendRequest = async (type = "login") => {
     const res = await axios
       .post(`https://r-talks.herokuapp.com/api/user/${type}`, {
@@ -104,6 +141,7 @@ const Auth = () => {
           >
             Submit
           </Button>
+          {oAuthButton}
           <Button
             variant="contained"
             onClick={() => setIsSignup(!isSignup)}
