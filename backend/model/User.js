@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-const useSchema = new Schema({
+const userSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -14,11 +14,20 @@ const useSchema = new Schema({
     },
     password: {
         type: String,
-        required: true,
+        required: false,
+        // required: true,
         minlength: 8,
         // select : false
+    },
+    googleTokenId: {
+        type: String
     },
     blogs: [{type: mongoose.Types.ObjectId, ref: "Blog", required: true}],
 });
 
-export default mongoose.model("User", useSchema);
+// userSchema.pre("save", () => {
+//     if(this.password === null && this.googleTokenId === null) {
+
+//     }
+// })
+export default mongoose.model("User", userSchema);
