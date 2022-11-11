@@ -54,7 +54,7 @@ const Auth = () => {
 
   const sendRequest = async (type = "login") => {
     const res = await axios
-      .post(`${backend}/api/user/${type}`, {
+      .post(`https://r-talks.herokuapp.com/api/user/${type}`, {
         name: inputs.name,
         email: inputs.email,
         password: inputs.password,
