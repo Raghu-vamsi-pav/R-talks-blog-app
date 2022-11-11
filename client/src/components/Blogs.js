@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Blog from "./Blog";
-import {heroku} from "../credentials.js";
-// import {heroku} from "./../../credentials";
+import credentials from "../credentials.js";
+
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState();
+  let backend = credentials.backend;
   const sendRequest = async () => {
     const res = await axios
-      .get(`https://r-talks.herokuapp.com/api/blog`)
+      .get(`${backend}/api/blog`)
       .catch((err) => console.log(err));
     const data = await res.data;
     return data;
   };
+ 
   useEffect(() => {
     sendRequest().then((data) => setBlogs(data.blogs));
   }, []);
@@ -20,7 +22,6 @@ const Blogs = () => {
   if(blogs == null) {
     return <div></div>
   } else {
-    console.log(blogs);
     return (
       <div>
         {
