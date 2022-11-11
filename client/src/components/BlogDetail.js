@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {heroku} from "../credentials.js";
+import credentials from "../credentials.js";
 
 const labelStyles = { mb: 1, mt: 2, fontSize: "24px", fontWeight: "bold" };
 
@@ -19,9 +19,10 @@ const BlogDetail = () => {
       [e.target.name]: e.target.value,
     }));
   };
+  let backend = credentials.backend;
   const fetchDetails = async () => {
     const res = await axios
-      .get(`https://r-talks.herokuapp.com/api/blog/${id}`)
+      .get(`${backend}/api/blog/${id}`)
       .catch((err) => console.log(err));
     const data = await res.data;
     return data;
@@ -37,7 +38,7 @@ const BlogDetail = () => {
   }, [id]);
   const sendRequest = async () => {
     const res = await axios
-      .put(`https://r-talks.herokuapp.com/api/blog/update/${id}`, {
+      .put(`${backend}/api/blog/update/${id}`, {
         title: inputs.title,
         description: inputs.description,
       })

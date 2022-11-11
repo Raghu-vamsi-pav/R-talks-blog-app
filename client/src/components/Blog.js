@@ -6,7 +6,7 @@ import {Avatar,Box,Card,CardContent,CardHeader,
   import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
   import { useNavigate } from "react-router-dom";
   import axios from "axios";
-import {heroku} from "../credentials.js";
+import credentials from "../credentials";
 
   // import { useStyles } from "./utils.js";
   const Blog = ({ title, description, imageURL, userName, isUser, id }) => {
@@ -15,9 +15,10 @@ import {heroku} from "../credentials.js";
     const handleEdit = () => {
       navigate(`/myBlogs/${id}`);
     };
+    let backend = credentials.backend;
     const deleteRequest = async () => {
       const res = await axios
-        .delete(`https://r-talks.herokuapp.com/api/blog/${id}`)
+        .delete(`${backend}/api/blog/${id}`)
         .catch((err) => console.log(err));
       const data = await res.data;
       return data;

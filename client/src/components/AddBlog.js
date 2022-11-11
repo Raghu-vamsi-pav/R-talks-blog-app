@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import { useStyles } from "./utils";
-import {heroku} from "../credentials.js";
+import credentials from "../credentials";
 
 const labelStyles = { mb: 1, mt: 2, fontSize: "24px", fontWeight: "bold" };
 const AddBlog = () => {
@@ -14,6 +14,7 @@ const AddBlog = () => {
     description: "",
     imageURL: "",
   });
+  let backend = credentials.backend;
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
@@ -22,7 +23,7 @@ const AddBlog = () => {
   };
   const sendRequest = async () => {
     const res = await axios
-      .post(`https://r-talks.herokuapp.com/api/blog/add`, {
+      .post(`${backend}/api/blog/add`, {
         title: inputs.title,
         description: inputs.description,
         image: inputs.imageURL,

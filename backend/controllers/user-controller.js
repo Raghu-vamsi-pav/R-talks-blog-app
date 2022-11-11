@@ -74,7 +74,6 @@ export const login = async (req, res, next) => {
 
 export const googleLogin = async (req,res,next) => {
     const {tokenId} = req.body;
-
     if(!tokenId) {
         return res.status(400).json({message:"bad request"});
     }
@@ -110,5 +109,4 @@ export const googleLogin = async (req,res,next) => {
                 }
             }
         })
-
 }

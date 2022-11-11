@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Blog from "./Blog";
-import {heroku} from "../credentials.js";
+import credentials from "../credentials";
 const UserBlogs = () => {
   const [user, setUser] = useState();
   const id = localStorage.getItem("userId");
-  console.log(id);
+  // console.log(id);
+  let backend = credentials.backend;
   const sendRequest = async () => {
     const res = await axios
-      .get(`https://r-talks.herokuapp.com/api/blog/user/${id}`)
+      .get(`${backend}/api/blog/user/${id}`)
       .catch((err) => console.log(err));
     const data = await res.data;
     //console.log(data.userBlogs.blogs);
